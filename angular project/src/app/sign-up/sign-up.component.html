@@ -1,0 +1,28 @@
+<div class="row pt-5"> <!-- pt-5 means padding top of 5 -->
+	<div class="col-md-6 mx-auto">
+		<div class="card rounded-0">
+
+			<div class="card-header">
+				<h3 class="mb-0">Registrieren</h3>
+			</div>
+
+			<div class="card-body">
+				<form class="form">
+					<!-- Mail -->
+					<div class="form-group"> 
+						<label for="">E-Mail</label>
+						<input [(ngModel)]="registerUserData.email" name="email" type="email" class="form-control rounded-0" required>
+					</div>	
+
+					<!-- password -->
+					<div class="form-group"> 
+						<label for="">Passwort</label>
+						<input [(ngModel)]="registerUserData.password" name="password" type="password" class="form-control rounded-0" required>
+					</div>
+					<button (click)="registerUser()" type="button" class="btn btn-primary float-right">Registrieren</button>	
+				</form>
+			</div>
+
+		</div>
+	</div>
+</div>

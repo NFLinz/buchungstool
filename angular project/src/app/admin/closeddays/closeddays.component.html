@@ -1,0 +1,35 @@
+<div class="title">
+  <h1>Sperrtageübersicht</h1>
+  <h4 class="subheading">An diesen Tagen können keine Buchungen vorgenommen werden.</h4>
+</div>
+
+<table class="table-fill">
+  <thead>
+    <tr>
+      <th class="text-center">Nummer</th>
+      <th class="text-center">Von</th>
+      <th class="text-center">Bis</th>
+      <th class="text-center">Info</th>
+      <th class="text-center">Aktionen</th>
+    </tr>
+  </thead>
+
+  <tr *ngFor="let day of closeddaysArr">
+    <td class="text-center">{{day.sperrtagID}}</td>
+    <td class="text-center">{{day.startDatum}}</td>
+    <td class="text-center">{{day.endDatum}}</td>
+    <td class="text-center">{{day.info}}</td>
+    <td class="text-center">
+        <!-- delete button -->
+        <a (click)="deleteClosedDay(day)" class='btn btn-danger m-r-5px' style="color: white">
+            <span class='fa fa-trash'></span> Löschen
+        </a>
+    </td>
+  </tr>
+</table>
+
+<div class="addButton">
+  <a (click)="createClosedDay()" class='btn btn-primary pull-center' style="color: white">
+    <span class='fa fa-plus-circle'></span> Sperrtag hinzufügen
+  </a>
+</div>

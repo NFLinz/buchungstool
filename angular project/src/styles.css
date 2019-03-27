@@ -1,0 +1,31 @@
+/* Application-wide Styles */
+
+/* You can add global styles to this file, and also import other style files */
+.m-b-18px{ margin-bottom: 18px; }
+.m-r-5px{ margin-right: 5px; }
+.w-40-pct{ width: 40%; }
+.text-align-center{ text-align: center; }
+
+/*
+h1 {
+  color: #369;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 250%;
+}
+h2, h3 {
+  color: #444;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: lighter;
+}
+body {
+  margin: 2em;
+}
+body, input[text], button {
+  color: #888;
+  font-family: Cambria, Georgia;
+}
+
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+*/

@@ -1,0 +1,46 @@
+label {
+  display: inline-block;
+  width: 3em;
+  margin: .5em 0;
+  color: #607D8B;
+  font-weight: bold;
+}
+input {
+  height: 2em;
+  font-size: 1em;
+  padding-left: .4em;
+}
+
+a.btn {
+  color: white;
+  margin-right: 3px;
+}
+
+a.backBtn {
+  margin-left: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: black;
+}
+
+a.backBtn:hover {
+  color: #F5F5DC;
+}
+
+a.buchenBtn {
+  background-color: #191970;
+}
+
+a.buchenBtn:hover {
+  color: yellow;
+}
+
+button {
+  color: white;
+}
+
+button:disabled {
+    margin-bottom: 10px;
+    margin-right: 20px;
+
+}

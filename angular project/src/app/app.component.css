@@ -1,0 +1,135 @@
+h1 {
+  font-size: 1.2em;
+  color: white;
+  margin-bottom: 0;
+}
+h2 {
+  font-size: 2em;
+  margin-top: 0;
+  padding-top: 0;
+}
+nav a {
+  color: white;
+  padding: 5px 30px;
+  text-decoration: none;
+  margin-top: 0px;
+  margin-right: 5px;
+  margin-left: 5px; 
+  display: inline-block;
+  border-radius: 4px;
+}
+nav a:visited, a:link {
+  color: white;
+
+  background-color: #52af2e;  /* default naturfreunde color ... invisible in nav bar, but everywhere else*/
+}
+nav a:hover {
+  background-color: #459226;
+}
+nav a.active {
+  color: #459226;
+}
+
+.navbar-brand {
+  display: inline-block;
+  padding-top: .3125rem;
+  padding-bottom: .3125rem;
+  margin-right: 1rem;
+  font-size: 1.25rem;
+  line-height: inherit;
+  white-space: nowrap;
+}
+
+.navbar-left img {
+  max-height: 50px;
+}
+
+/* CSS for high-resolution devices */
+@media only screen and (-Webkit-min-device-pixel-ratio: 1.5),
+only screen and (-moz-min-device-pixel-ratio: 1.5),
+only screen and (-o-min-device-pixel-ratio: 3/2),
+only screen and (min-device-pixel-ratio: 1.5) {
+  .navbar-brand {
+    background-color: blue;
+    margin-right: 0px;
+  }
+
+
+}
+
+a.nav-link {
+  font-size: 1.2em;
+  font-weight: normal;
+}
+
+
+#verwaltungButton {
+  color: white;
+  background-color: #0984e3;
+  padding: 5px 10px;
+  text-decoration: none;
+  margin-top: 5px;
+  margin-right: 5px;
+  margin-left: 5px; 
+  display: inline-block;
+  border-radius: 4px;
+}          
+
+#verwaltungButton:hover {
+  opacity: 0.8;
+}   
+
+
+
+footer.myFooter {
+  padding-top: 32px!important;
+  padding-bottom: 32px!important;
+  margin-top: 16px!important;
+  text-align: center!important;
+  color: #fff!important;
+  background-color: #000!important;
+}
+
+.socialMediaBar {
+  padding-top: 16px!important;
+  padding-bottom: 16px!important;
+  font-size: 24px!important;
+}
+
+.fa {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin-left: 10px;
+}
+
+.fa:hover {
+  opacity: 0.8;
+}
+
+
+footer nav a {
+  background-color: transparent;
+  color: white;
+  padding: 5px 30px;
+  text-decoration: none;
+  margin-top: 0px;
+  margin-right: 5px;
+  margin-left: 5px; 
+  display: inline-block;
+  border-radius: 4px;
+}
+
+footer nav a:hover {
+  background-color: transparent;
+  color: green;
+}
+
+footer nav a:visited, a:link {
+  color: white;
+
+  background-color: transparent; 
+}

@@ -1,0 +1,40 @@
+<div class="jumbotron">
+  <div class="container">
+    <h1 class="display-3">Finde die perfekte Unterkunft für deinen nächsten Trip.</h1>
+    <br>
+    <p><a (click)="scroll(target)" class="btn btn-primary btn-lg" id="scrollbtn"role="button">Hütten anzeigen &raquo;</a></p>
+  </div>
+</div>
+
+
+<div #target class="container">
+  <!-- Example row of columns -->
+  <div class="row">
+    <div class="col-md-4" *ngFor="let huette of huetten">
+      <div class="card huette">
+        <img class="card-img-top" src={{huette.imageurl}} alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">{{ huette.name }}</h5>
+          <p class="card-text">{{ huette.plz }} {{ huette.ort }}</p>
+          <button type="button" class="btn btn-primary" disabled="true">ab {{huette.preis}} EUR/Nacht</button>
+          <br>
+          <br>
+          <div style="text-align:center">
+              <a (click)="readOneHuette(huette.huetteID)" class='btn detailBtn m-r-5px'>
+                    <span class='fa fa-eye'></span> Details
+              </a>
+              <a (click)="openBookingFor(huette.huetteID)" class='btn buchenBtn'>
+                    <span class='fa fa-hotel'></span> Jetzt Buchen
+              </a>
+          </div>
+        </div>
+        <div class="card-footer text-muted">
+         Bis zu {{huette.plaetze}} Personen
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+</div> <!-- /container -->

@@ -1,0 +1,38 @@
+a.btn {
+	color: white;
+	margin-right: 3px;
+}
+
+a.buchenBtn {
+    background-color: #191970;
+}
+
+a.buchenBtn:hover {
+  color: white;
+  background-color: #46468c;
+}
+
+a.detailBtn {
+    background-color: #d35400;
+}
+
+a.detailBtn:hover {
+    color: white;
+    background-color: #d76519;
+}
+
+.card-img-top {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+}
+
+.container {
+    margin-top:20px;
+    margin-bottom: 90px;
+}
+
+.row {
+    justify-content: center;
+}

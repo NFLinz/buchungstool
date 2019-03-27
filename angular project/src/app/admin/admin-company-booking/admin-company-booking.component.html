@@ -1,0 +1,568 @@
+<div class="title">
+  <h1 class="titleh1">Firmen-/Gruppenbuchung</h1>
+  <h4 class="titlesubheading">Erstellen Sie hier eine neue Buchung.</h4>
+  <button (click)="goBack()" class='btn btn-primary float-center'>
+          <span class='fa fa-chevron-circle-left'></span> Abbrechen
+  </button>
+</div>
+
+<form id="bookingForm" class="form" [formGroup]="create_booking_form" (ngSubmit)="createBooking()">
+    
+    <!-- First tab -->
+    <div class="tab">
+        <h1>Buchungsdetails</h1>
+
+        <!-- --- PERSONS --- -->
+        <hr class="separatorHR">
+        <h2>Personenanzahl</h2>
+        <h3>Anzahl Erwachsene (Mitglieder)</h3>
+        <h4 class="subheading">Alter: über 15 Jahre zum Tag des Reiseantritts</h4>
+        <div class="form-group">
+            <select formControlName="erwachseneMitglieder" class="form-control" id="adultMSelect" 
+                    #adultMRef (change)="adultMemberSelectOnChange(adultMRef.value)" required>
+                <option *ngFor="let key of getAscendingArray(0,30)">{{key}}</option>
+            </select>
+        </div> 
+
+        <h3>Anzahl Erwachsene (Nicht-Mitglieder)</h3>
+        <h4 class="subheading">Alter: über 15 Jahre zum Tag des Reiseantritts</h4>
+        <div class="form-group">
+            <select formControlName="erwachseneNichtMitglieder" class="form-control" id="adultNSelect" 
+                    #adultNRef (change)="adultNonMemberSelectOnChange(adultNRef.value)" required>
+                <option *ngFor="let key of getAscendingArray(0,30)">{{key}}</option>
+            </select>
+        </div> 
+
+        <h3>Anzahl Jugendliche (Mitglieder)</h3>
+        <h4 class="subheading">Alter: unter 15 Jahre zum Tag des Reiseantritts</h4>
+        <div class="form-group">
+            <select formControlName="jugendlicheMitglieder" class="form-control" id="teenagerMSelect" 
+                    #teenagerMRef (change)="teenagerMemberSelectOnChange(teenagerMRef.value)" required>
+                <option *ngFor="let key of getAscendingArray(0,30)">{{key}}</option>
+            </select>
+        </div> 
+
+        <h3>Anzahl Jugendliche (Nicht-Mitglieder)</h3>
+        <h4 class="subheading">Alter: unter 15 Jahre zum Tag des Reiseantritts</h4>
+        <div class="form-group">
+            <select formControlName="jugendlicheNichtMitglieder" class="form-control" id="teenagerNSelect" 
+                    #teenagerNRef (change)="teenagerNonMemberSelectOnChange(teenagerNRef.value)" required>
+                <option *ngFor="let key of getAscendingArray(0,30)">{{key}}</option>
+            </select>
+        </div> 
+
+        <h3>Anzahl Kinder (Mitglieder)</h3>
+        <h4 class="subheading">Alter: unter 6 Jahre zum Tag des Reiseantritts</h4>
+        <div class="form-group">
+            <select formControlName="kinderMitglieder" class="form-control" id="kidMSelect" 
+                    #kidMRef (change)="kidMemberSelectOnChange(kidMRef.value)" required>
+                <option *ngFor="let key of getAscendingArray(0,30)">{{key}}</option>
+            </select>
+        </div> 
+
+        <h3>Anzahl Kinder (Nicht-Mitglieder)</h3>
+        <h4 class="subheading">Alter: unter 6 Jahre zum Tag des Reiseantritts</h4>
+        <div class="form-group">
+            <select formControlName="kinderNichtMitglieder" class="form-control" id="kidNSelect" 
+                    #kidNRef (change)="kidNonMemberSelectOnChange(kidNRef.value)" required>
+                <option *ngFor="let key of getAscendingArray(0,30)">{{key}}</option>
+            </select>
+        </div> 
+
+        <!-- --- CATEGORY --- -->
+        <div *ngIf="calcTotalPersons() > 0">
+            <hr class="separatorHR">
+            <h2>Zimmerkategorie</h2>
+            <h3>Zimmerkategorie auswählen</h3>
+            <div class="form-group">
+                <select formControlName="zimmerkategorie" class="form-control" id="zimmerkategorieSelect" 
+                        #catRef (change)="zimmerkategorieSelectOnChange(catRef.value)" required>
+                <option></option>
+                <option *ngFor="let category of roomCategories">{{category?.name}}</option>
+                </select>
+
+                <div *ngIf="(create_booking_form.get('zimmerkategorie').value === '')" class="alert alert-danger">
+                    Bitte wählen Sie eine Zimmerkategorie aus.
+                </div>
+            </div>
+        </div>
+
+        <!-- booking calendar -->
+        <div *ngIf="(create_booking_form.get('zimmerkategorie').value !== '') && calcTotalPersons() > 0">
+            <hr class="separatorHR">
+            <h2>Reisezeitraum</h2>
+            <p>Anreise- und Abreisetag durch Klicken auswählen.</p>
+
+            <div class="bookingCalendar">
+                <!-- header view of the calendar -->
+                <div class="calendarHeader">
+                  <ul>
+                    <button (click)="loadPreviousMonth()" type="button" class="prev">&#10094;</button>
+                    <button (click)="loadNextMonth()" type="button" class="next">&#10095;</button>
+                    <li class="mon">{{monthName}}</li>
+                    <li class="yea">{{year}}</li>
+                  </ul>
+                </div>
+
+                <ul class="weekdays">
+                  <li>Mo</li>
+                  <li>Di</li>
+                  <li>Mi</li>
+                  <li>Do</li>
+                  <li>Fr</li>
+                  <li>Sa</li>
+                  <li>So</li>
+                </ul>
+
+                <ul *ngIf="areBookingsReadyForMonth === true" class="days"> 
+                    <!-- Insert empty fields for the first few days if month does not start with a monday -->
+                    <li *ngFor="let emptyDay of calcFirstDayAndPaddingOfMonth()">
+                         <div class="invalidDay">&nbsp;</div>
+                    </li>
+
+                    <!-- iterate over all days of the month -->
+                    <li *ngFor="let day of days">
+
+                        <div *ngIf="!isClosedOnThisDay(day);else showDayAsOccupied">
+
+                            <!-- check if there is at least 1 free room on this day -->
+                            <div *ngIf="isOneRoomFreeOnThisDay(day);else showDayAsOccupied">
+                                <!-- select first day, check if possible, mark as free or as selected -->
+                                <div *ngIf="selectFirstDay" class="freeDay" (click)="setCheckInDate(day)"
+                                    [ngClass]="{'freeDay': !isDayInRange(day), 'selected': isDayInRange(day)}">{{day}}</div>
+                                <!-- select departure day, check if possible, mark as free or as selected -->
+                                <div *ngIf="!selectFirstDay" class="freeDay" (click)="setCheckOutDate(day)"
+                                    [ngClass]="{'freeDay': !isDayInRange(day), 'selected': isDayInRange(day)}">{{day}}</div>
+                            </div>
+
+                        </div>
+
+                        <!-- if there is no free room available, display the day as occupied -->
+                        <ng-template #showDayAsOccupied>
+                            <div class="occupied">{{day}}</div>
+                        </ng-template>
+                    </li>
+                </ul>
+            </div> 
+
+            <table class="legendForCalendar">
+                <tr>
+                    <th>Legende</th>
+                    <td class="legendFree">Frei</td>
+                    <td class="legendOccupied">Belegt</td>
+                    <td class="legendSelected">Ausgewählt</td>
+                </tr>
+            </table>
+
+            <div class="checkInAndOutDates">
+                <div *ngIf="checkInDate" style="text-align: center;">
+                    <h4>Anreisedatum</h4>
+                    <h4 class="subheading">{{checkInDate.toLocaleDateString("de-AT", dateOptions)}}</h4>
+                </div>
+                <div *ngIf="checkOutDate" class="dividerLine"></div>
+                <div *ngIf="checkOutDate" style="text-align: center;">
+                    <h4>Abreisedatum</h4>
+                    <h4 class="subheading">{{checkOutDate.toLocaleDateString("de-AT", dateOptions)}}</h4>                
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- additonal services -->
+    <div class="tab">
+        <h1>Zusatzleistungen</h1>
+        
+        <hr class="separatorHR">
+        <h2>Verpflegung</h2>
+        <h3>Verpflegungsart auswählen</h3>
+        <div class="form-group">
+            <select formControlName="verpflegung" class="form-control" id="verpflegungSelect" 
+                    #verpflegungRef (change)="verpflegungSelectOnChange(verpflegungRef.value)" required>
+                <option *ngFor="let type of boardTypes">{{type}}</option>
+            </select>
+
+            <div *ngIf="(create_booking_form.get('verpflegung').value === '')" class="alert alert-danger">
+                Bitte wählen Sie eine Verpflegungsart aus.
+            </div>
+        </div>  
+    </div>
+
+
+    <!-- data of booking creator-->
+    <div class="tab">
+        <h1>Persönliche Daten</h1>
+
+        <div class="form-group">
+            <label for="">Anrede</label>
+            <select formControlName="anrede" class="form-control" id="anredeSelect" 
+                    #anredeRef (change)="anredeSelectOnChange(anredeRef.value)" required>
+                <option *ngFor="let anrede of anreden">{{anrede}}</option>
+            </select>
+        </div> 
+
+        <div class="form-group"> 
+            <label for="">Vorname Kontaktperson</label>
+            <input
+                formControlName="bvorname"
+                type="string" name="bvorname"
+                class="form-control" required />
+    
+            <!-- show this error if the field is 'empty' and 'touched' -->
+            <div
+                *ngIf="create_booking_form.get('bvorname').touched && create_booking_form.get('bvorname').hasError('required')" class="alert alert-danger">
+                Bitte geben Sie den Vornamen an.
+            </div>
+        </div>
+
+        <div class="form-group"> 
+            <label for="">Nachname Kontaktperson</label>
+            <input
+                formControlName="bnachname"
+                type="string" name="bnachname"
+                class="form-control" required />
+        
+                <!-- show this error if the field is 'empty' and 'touched' -->
+                <div
+                    *ngIf="create_booking_form.get('bnachname').touched && create_booking_form.get('bnachname').hasError('required')"
+                    class="alert alert-danger">
+                Bitte geben Sie den Nachnamen an.
+                </div>
+        </div>  
+      
+        <div *ngIf="(create_booking_form.get('anrede').value === 'Firma');else showPrivateData">
+          <div class="form-group">
+            <label for="">Firmenname</label>
+            <input formControlName="firmenname" type="text" name="firmenname" class="form-control" required />
+            <div *ngIf="create_booking_form.get('firmenname').touched && create_booking_form.get('firmenname').hasError('required')" class="alert alert-danger">
+                Bitte geben Sie den Firmennamen an.
+            </div>
+          </div>
+      
+          <div class="form-group">
+            <label for="">Firmenadresse</label>
+            <input formControlName="firmenadresse" type="text" name="firmenadresse" class="form-control" required />
+            <div *ngIf="create_booking_form.get('firmenadresse').touched && create_booking_form.get('firmenadresse').hasError('required')" class="alert alert-danger">
+                Bitte geben Sie die Adresse an.
+            </div>
+          </div>
+      
+          <div class="form-group">
+            <label for="">Firmenpostleitzahl</label>
+            <input formControlName="firmenplz" type="text" name="firmenplz" class="form-control" required />
+            <div *ngIf="create_booking_form.get('firmenplz').touched && create_booking_form.get('firmenplz').hasError('required')" class="alert alert-danger">
+                Bitte geben Sie die Postleitzahl an.
+            </div>
+          </div>
+      
+          <div class="form-group">
+            <label for="">Firmenort</label>
+            <input formControlName="firmenort" type="text" name="firmenort" class="form-control" required />
+            <div *ngIf="create_booking_form.get('firmenort').touched && create_booking_form.get('firmenort').hasError('required')" class="alert alert-danger">
+                Bitte geben Sie den Firmenort an.
+            </div>
+          </div>
+        </div>
+      
+ 
+        <ng-template #showPrivateData>
+            <div class="form-group" *ngIf="(create_booking_form.get('anrede').value !== '')" auto> 
+                <label for="">Adresse Kontaktperson</label>
+                <input
+                    formControlName="badresse"
+                    type="string" name="badresse"
+                    class="form-control" required />
+    
+                    <!-- show this error if the field is 'empty' and 'touched' -->
+                    <div
+                        *ngIf="create_booking_form.get('badresse').touched && create_booking_form.get('badresse').hasError('required')"
+                        class="alert alert-danger">
+                    Bitte geben Sie die Adresse an.
+                    </div>
+            </div> 
+
+            <div class="form-group" *ngIf="(create_booking_form.get('anrede').value !== '')" auto> 
+                <label for="">Postleitzahl Kontaktperson</label>
+                <input
+                    formControlName="bplz"
+                    type="string" name="bplz"
+                    class="form-control" required />
+    
+                    <!-- show this error if the field is 'empty' and 'touched' -->
+                    <div
+                        *ngIf="create_booking_form.get('bplz').touched && create_booking_form.get('bplz').hasError('required')"
+                        class="alert alert-danger">
+                    Bitte geben Sie die Postleitzahl an.
+                    </div>
+            </div> 
+
+            <div class="form-group" *ngIf="(create_booking_form.get('anrede').value !== '')" auto> 
+                <label for="">Ort Kontaktperson</label>
+                <input
+                    formControlName="bort"
+                    type="string" name="bort"
+                    class="form-control" required />
+    
+                    <!-- show this error if the field is 'empty' and 'touched' -->
+                    <div
+                        *ngIf="create_booking_form.get('bort').touched && create_booking_form.get('bort').hasError('required')"
+                        class="alert alert-danger">
+                    Bitte geben Sie den Wohnort an.
+                    </div>
+            </div>
+        </ng-template>
+
+        <div class="form-group" auto> 
+            <label for="">Telefonnummer Kontaktperson</label>
+            <input
+                formControlName="btelefonnummer"
+                type="string" name="btelefonnummer"
+                class="form-control" required />
+ 
+                <!-- show this error if the field is 'empty' and 'touched' -->
+                <div
+                    *ngIf="create_booking_form.get('btelefonnummer').touched && create_booking_form.get('btelefonnummer').hasError('required')"
+                    class="alert alert-danger">
+                Bitte geben Sie die Telefonnummer an.
+                </div>
+        </div>
+
+        <div class="form-group" auto> 
+            <label for="">E-Mail Adresse Kontaktperson</label>
+            <input
+                formControlName="bmail"
+                type="string" name="bmail"
+                class="form-control" required />
+ 
+                <!-- show this error if the field is 'empty' and 'touched' -->
+                <div
+                    *ngIf="create_booking_form.get('bmail').touched && create_booking_form.get('bmail').hasError('required')"
+                    class="alert alert-danger">
+                Bitte geben Sie die Mail Adresse an.
+                </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="">Bemerkung zur Buchung</label>
+            <input formControlName="bemerkung" type="text" name="bemerkung" class="form-control" required />
+        </div>
+
+    </div>
+
+    <!-- checkout -->
+    <div class="tab">
+
+        <div class="container">
+          <div class="py-5 text-center">
+            <h2>Checkout</h2>
+            <p class="lead">Hier können Sie die gebuchten Leistungen und Daten noch einmal überprüfen.</p>
+        </div>
+
+
+        <div class="col-md-12 order-md-2 mb-4">
+          <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted">Leistungen</span>
+            <span class="badge badge-secondary badge-pill">i</span>
+          </h4>
+          <ul class="list-group mb-3">
+
+            <li *ngIf="calculatedAmountNonMemberAdults > 0" class="list-group-item d-flex justify-content-between lh-condensed">
+              <div>
+                <h6 class="my-0">{{calculatedAmountNonMemberAdults}} x Übernachtung Erwachsene (Nicht-Mitglied)</h6>
+                <small class="text-muted">{{calcNightsBetweenDates()}} Nächte à {{getSinglePriceForAdults()}}</small>
+              </div>
+              <span class="text-muted">{{calcTotalPriceForAdults()}}</span>
+            </li>
+
+            <li *ngIf="calculatedAmountMemberAdults > 0" class="list-group-item d-flex justify-content-between lh-condensed">
+                <div>
+                  <h6 class="my-0">{{calculatedAmountMemberAdults}} x Übernachtung Erwachsene (Mitglied)</h6>
+                  <small class="text-muted">{{calcNightsBetweenDates()}} Nächte à {{getMemberPriceForAdults()}}</small>
+                </div>
+                <span class="text-muted">{{calcTotalPriceForMemberAdults()}}</span>
+            </li>
+
+            <li *ngIf="calculatedAmountNonMemberTeenagers > 0" class="list-group-item d-flex justify-content-between lh-condensed">
+                <div>
+                    <h6 class="my-0">{{calculatedAmountNonMemberTeenagers}} x Übernachtung Jugend (Nicht-Mitglied)</h6>
+                    <small class="text-muted">{{calcNightsBetweenDates()}} Nächte à {{getSinglePriceForTeenagers()}}</small>
+                </div>
+                <span class="text-muted">{{calcTotalPriceForTeenagers()}}</span>
+            </li>
+
+            <li *ngIf="calculatedAmountMemberTeenagers > 0" class="list-group-item d-flex justify-content-between lh-condensed">
+                <div>
+                    <h6 class="my-0">{{calculatedAmountMemberTeenagers}} x Übernachtung Jugend (Mitglied)</h6>
+                    <small class="text-muted">{{calcNightsBetweenDates()}} Nächte à {{getMemberPriceForTeenagers()}}</small>
+                </div>
+                <span class="text-muted">{{calcTotalPriceForMemberTeenagers()}}</span>
+            </li>
+                  
+            <li *ngIf="calculatedAmountNonMemberKids > 0" class="list-group-item d-flex justify-content-between lh-condensed">
+                <div>
+                    <h6 class="my-0">{{calculatedAmountNonMemberKids}} x Übernachtung Kinder (Nicht-Mitglied)</h6>
+                    <small class="text-muted">{{calcNightsBetweenDates()}} Nächte à {{getSinglePriceForKids()}}</small>
+                </div>
+                <span class="text-muted">{{calcTotalPriceForKids()}}</span>
+            </li>
+
+            <li *ngIf="calculatedAmountMemberKids > 0" class="list-group-item d-flex justify-content-between lh-condensed">
+                <div>
+                    <h6 class="my-0">{{calculatedAmountMemberKids}} x Übernachtung Kinder (Mitglied)</h6>
+                    <small class="text-muted">{{calcNightsBetweenDates()}} Nächte à {{getMemberPriceForKids()}}</small>
+                </div>
+                <span class="text-muted">{{calcTotalPriceForMemberKids()}}</span>
+            </li>
+
+            <li *ngIf="(create_booking_form.get('verpflegung').value === 'Frühstück')" class="list-group-item d-flex justify-content-between lh-condensed">
+                <div>
+                    <h6 class="my-0">Frühstück für {{create_booking_form.get('personen').value}} Personen</h6>
+                    <small class="text-muted">{{calcNightsBetweenDates()}} x à {{getSinglePriceForBreakfasts()}}</small>
+                </div>
+                <span class="text-muted">{{calcTotalPriceForBreakfasts()}}</span>
+            </li>
+
+            <li *ngIf="(create_booking_form.get('verpflegung').value === 'Halbpension')" class="list-group-item d-flex justify-content-between lh-condensed">
+                <div>
+                    <h6 class="my-0">Halbpension für {{create_booking_form.get('personen').value}} Personen</h6>
+                    <small class="text-muted">{{calcNightsBetweenDates()}} x à {{getSinglePriceForHalfBoards()}}</small>
+                </div>
+                <span class="text-muted">{{calcTotalPriceForHalfBoards()}}</span>
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between">
+              <span>Gesamt (EUR)</span>
+              <strong>{{calcTotalSumOfServices()}}</strong>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span>Davon Anzahlung (50 %)</span>
+                <strong>{{calcDepositSum()}}</strong>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-md-12 order-md-1">
+          <h4 class="mb-3"><span class="text-muted">Rechnungsadresse</span></h4>
+          <ul class="list-group mb-3">
+
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div>
+                <h6 class="my-0">{{create_booking_form.get('bvorname').value}}</h6>
+                <small class="text-muted">Vorname</small>
+              </div>
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div>
+                <h6 class="my-0">{{create_booking_form.get('bnachname').value}}</h6>
+                <small class="text-muted">Nachname</small>
+              </div>
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div>
+                <h6 class="my-0">{{create_booking_form.get('badresse').value}}</h6>
+                <small class="text-muted">Adresse</small>
+              </div>
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div>
+                <h6 class="my-0">{{create_booking_form.get('bplz').value}}</h6>
+                <small class="text-muted">Postleitzahl</small>
+              </div>
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div>
+                <h6 class="my-0">{{create_booking_form.get('bort').value}}</h6>
+                <small class="text-muted">Ort</small>
+              </div>
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div>
+                <h6 class="my-0">{{create_booking_form.get('btelefonnummer').value}}</h6>
+                <small class="text-muted">Telefonnummer</small>
+              </div>
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div>
+                <h6 class="my-0">{{create_booking_form.get('bmail').value}}</h6>
+                <small class="text-muted">E-Mail</small>
+              </div>
+            </li>
+          </ul>                         
+        </div>
+        </div>
+
+    </div>
+
+
+
+    <!-- payment -->
+    <div class="tab">
+
+        <h1>Zahlungsart</h1>
+
+        <h3>Wählen Sie die gewünschte Zahlungsart</h3>
+        <div class="form-group">
+            <select formControlName="zahlungsartName" class="form-control" id="zahlungsartSelect" 
+                    #artRef (change)="zahlungsartSelectOnChange(artRef.value)" required>
+              <option></option>
+              <option *ngFor="let method of paymentMethods">{{method}}</option>
+            </select>
+
+            <div *ngIf="(create_booking_form.get('zahlungsartName').value === '')" class="alert alert-danger">
+                Bitte wählen Sie eine Zahlungsart aus.
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <!-- previous and next buttons -->
+    <div style="overflow:auto;">
+        <div style="float:right;">
+            <button type="button" id="prevBtn" (click)="nextPrev(-1)">Zurück</button>
+            <button *ngIf="selectedPaymentMethod !== 'Paypal' || currentTab !== 5" type="button" id="nextBtn" (click)="nextPrev(1)" [disabled]="!validateForm()">Weiter</button>
+        </div>
+    </div>
+    <!-- <div class="paymentButtonContainer" *ngIf="selectedPaymentMethod && currentTab === 5">
+        <hr>
+        <h3 class="paymentHeading">Klicken Sie hier um die Bezahlung abzuschließen</h3>
+        <div *ngIf="selectedPaymentMethod === 'Paypal'" id="paypal-checkout-btn"></div>
+    </div> -->
+
+
+    <div *ngIf="!isClosedOnThisDay(day);else showDayAsOccupied">
+
+        <!-- check if there is at least 1 free room on this day -->
+        <div *ngIf="isOneRoomFreeOnThisDay(day);else showDayAsOccupied">
+            <!-- select first day, check if possible, mark as free or as selected -->
+            <div *ngIf="selectFirstDay" class="freeDay" (click)="setCheckInDate(day)"
+                [ngClass]="{'freeDay': !isDayInRange(day), 'selected': isDayInRange(day)}">{{day}}</div>
+            <!-- select departure day, check if possible, mark as free or as selected -->
+            <div *ngIf="!selectFirstDay" class="freeDay" (click)="setCheckOutDate(day)"
+                [ngClass]="{'freeDay': !isDayInRange(day), 'selected': isDayInRange(day)}">{{day}}</div>
+        </div>
+
+    </div>
+
+    <!-- if there is no free room available, display the day as occupied -->
+    <ng-template #showDayAsOccupied>
+        <div class="occupied">{{day}}</div>
+    </ng-template>
+
+    <!-- Circles which indicate the steps of the form: -->
+    <div style="text-align:center;margin-top:40px;">
+      <span class="step"></span>
+      <span class="step"></span>
+      <span class="step"></span>
+      <span class="step"></span>
+      <span class="step"></span>
+    </div>
+ 
+</form>

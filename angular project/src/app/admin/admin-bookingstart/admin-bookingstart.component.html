@@ -1,0 +1,65 @@
+<div class="title">
+  <h1 class="titleh1">Neue Buchung</h1>
+  <h4 class="titlesubheading">Manuelle Buchungserstellung</h4>
+  <button (click)="goBack()" class='btn btn-primary float-center'>
+          <span class='fa fa-chevron-circle-left'></span> Abbrechen
+  </button>
+</div>
+
+<div id="bookingForm">
+    
+  <!-- First tab -->
+  <div class="tab">
+      <h1>Buchungstyp</h1>
+
+      <!-- --- PERSONS --- -->
+      <hr class="separatorHR">
+      <h2>Entsprechendes Feld wählen</h2>
+
+      <div #target class="container">
+        <!-- Example row of columns -->
+        <div class="row">
+          <!-- <div class="col-md-6">
+            <a class="tile card huette" routerLink="./data" routerLinkActive="active">
+              <div class="optionTitle">Private<br>Buchung</div>
+            </a>
+          </div> -->
+      
+          <div class="col-md-6">
+            <div class="card huette">
+              <img class="card-img-top" src="https://image.flaticon.com/icons/svg/1352/1352103.svg" alt="Card image cap">
+              <div class="card-body">
+                <div style="text-align:center">
+                    <a class='btn buchenBtn' routerLink="./bookings" routerLinkActive="active" (click)="privateClicked()">
+                          <span class="fa fa-user"></span> Privatbuchung
+                    </a>
+                </div>
+              </div>
+              <div class="card-footer text-muted">
+                Weniger als 10 Personen
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="card huette">
+              <img class="card-img-top" src="https://image.flaticon.com/icons/svg/138/138228.svg" alt="Card image cap">
+              <div class="card-body">
+                <div style="text-align:center">
+                    <a class='btn buchenBtn' (click)="companyClicked()">
+                          <span class="fa fa-users"></span> Firmen-/Gruppenbuchung
+                    </a>
+                </div>
+              </div>
+              <div class="card-footer text-muted">
+                Über 10 Personen oder Business Kunden
+              </div>
+            </div>
+          </div>
+      
+        </div> <!-- /row -->
+        
+      </div> <!-- /container -->
+
+  </div>
+</div>

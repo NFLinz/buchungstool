@@ -1,0 +1,59 @@
+<div class="title">
+    <h1>Sperrtage Hinzufügen</h1>
+    <h4 class="subheading">An diesen Tagen können keine Buchungen vorgenommen werden.</h4>
+    <button (click)="goBack()" class='btn btn-primary float-center'>
+            <span class='fa fa-chevron-circle-left'></span> Abbrechen
+    </button>
+</div>
+
+<form class="closedDayForm" [formGroup]="create_closedday_form" (ngSubmit)="createClosedDay()">
+
+  <h1>Sperrtage hinzufügen</h1>
+  <hr>
+
+  <h3>Von</h3>
+  <div class="form-group">
+      <input formControlName="startDatum" name="startDatum" type="date" class="form-control" required />
+
+      <!-- show this error if the field is 'empty' and 'touched' -->
+      <div
+          *ngIf="create_closedday_form.get('startDatum').touched && create_closedday_form.get('startDatum').hasError('required')"
+          class="alert alert-danger">
+          Bitte Startdatum eingeben.
+      </div>
+  </div>
+  
+  <h3>Bis (inklusive)</h3>
+  <div class="form-group">
+      <input formControlName="endDatum" type="date" name="endDatum" class="form-control" required />
+
+      <!-- show this error if the field is 'empty' and 'touched' -->
+      <div
+          *ngIf="create_closedday_form.get('endDatum').touched && create_closedday_form.get('endDatum').hasError('required')"
+          class="alert alert-danger">
+          Bitte Enddatum eingeben.
+      </div>
+      <div *ngIf="isEndDateDefined() === true && validateRange() === false" class="alert alert-danger">
+          Enddatum darf nicht vor dem Startdatum liegen.
+      </div>
+  </div>
+
+  <h3>Info (Grund)</h3>
+  <div class="form-group">
+      <input formControlName="info" type="text" name="info" class="form-control" required />
+
+      <!-- show this error if the field is 'empty' and 'touched' -->
+      <div
+          *ngIf="create_closedday_form.get('info').touched && create_closedday_form.get('info').hasError('required')"
+          class="alert alert-danger">
+          Bitte Begründung angeben.
+      </div>
+  </div>
+
+  <!-- disable the submit button if the form is 'invalid' -->
+  <div style="text-align: center;">
+    <button class="btn btn-primary btn-lg" type="submit" [disabled]="create_closedday_form.invalid">
+        <span class="glyphicon glyphicon-plus"></span> Speichern
+    </button>
+  </div>
+</form>

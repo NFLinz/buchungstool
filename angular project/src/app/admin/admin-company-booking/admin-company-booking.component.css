@@ -1,0 +1,531 @@
+ul {list-style-type: none;}
+body {
+  font-family: Verdana, sans-serif;
+}
+
+.title {
+  display: block;
+  margin: auto;
+  text-align: center;
+  max-width: 80%;
+  padding:5px;
+  width: 100%;
+}
+
+.titleh1 {
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.titlesubheading {
+  color: #808080;
+  font-size: 16px;
+  margin-top: 0px;
+  margin-bottom: 20px;
+}
+
+#gradientHeading {
+    text-align:center;
+    margin:auto;
+    color:#f3f3f3;
+    font-size:30px;
+    font-weight:550;
+    padding-top:70px;
+    height: 200px;
+    width: 100%;
+    background-color: #1fc8db;
+    background-image: linear-gradient(141deg, #9fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
+    color: white;
+    opacity: 0.95;
+}
+
+#bookingForm {
+  background-color: #f0f0f0;
+  margin: 100px auto;
+  margin-top: 20px;
+  padding: 40px;
+  width: 70%;
+  min-width: 300px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+
+h3 {
+  margin-top: 30px;
+  font-size: 20px;
+}
+
+h4 {
+  font-size: 20px;
+}
+
+.subheading {
+  color: #808080;
+  font-size: 15px;
+  margin-top: -5px;
+  margin-bottom: 10px;
+}
+
+.separatorHR {
+  margin: 50px 0px;
+}
+
+
+/* --------------------------------- CALENDAR ------------------------------ */
+.bookingCalendar {
+  margin: 100px auto;
+  margin-bottom: 15px;
+  margin-top: 0px;
+  width: 100%;
+  min-width: 300px;
+  cursor: default;
+}
+
+/* Weekdays (Mon-Sun) */
+.bookingCalendar .weekdays {
+    margin: 0;
+    padding: 10px 0;
+    background-color:#ddd;
+}
+
+.bookingCalendar .weekdays li {
+    display: inline-block;
+    width: 13.6%;
+    color: #666;
+    text-align: center;
+}
+
+/* Days (1-31) */
+.bookingCalendar .days {
+    padding: 10px 0;
+    background: #E8E8E8;
+    margin: 0;
+}
+
+.bookingCalendar .days li {
+    list-style-type: none;
+    display: inline-block;
+    width: 13.6%;
+    text-align: center;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #777;
+}
+
+/* Highlight the "current" day */
+.bookingCalendar .days li .active {
+    padding: 5px;
+    background: #1abc9c;
+    color: white !important
+} 
+
+.invalidDay {
+    cursor: not-allowed;
+}
+
+.bookingCalendar .days li .freeDay {
+    padding-top: 4px;
+    padding-bottom: 2px;
+    background-color: #2ecc71;
+    border-radius: 40px;
+    margin-left: 5px;
+    margin-right: 5px;
+    color: white !important;
+    cursor: pointer;
+}
+
+.bookingCalendar .days li .selected {
+    padding-top: 4px;
+    padding-bottom: 2px;
+    background-color: peru;
+    border-radius: 40px;
+    margin-left: 5px;
+    margin-right: 5px;
+    color: white !important;
+    cursor: pointer;
+}
+
+.bookingCalendar .days li .freeDay .today {
+    color: red;
+}
+
+.bookingCalendar .days li .occupied {
+    background: transparent;
+}
+
+/* Month header */
+.bookingCalendar .calendarHeader {
+    padding: 40px 10px;
+    width: 100%;
+    background: #1abc9c;
+    text-align: center;
+}
+
+/* Month list */
+.bookingCalendar .calendarHeader ul {
+    margin: 0;
+    padding: 0;
+}
+
+.bookingCalendar .calendarHeader ul li {
+    color: white;
+    letter-spacing: 3px;
+}
+
+.bookingCalendar .calendarHeader .mon {
+    font-size: 40px;
+    text-transform: uppercase;
+}
+
+.bookingCalendar .calendarHeader .yea {
+    font-size: 18px;
+}
+
+/* Previous button inside month header */
+.bookingCalendar .calendarHeader .prev {
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 17px;
+    cursor: pointer;
+    background-color: transparent;
+    outline: none;
+    float: left;
+    margin-top: 30px;
+}
+
+.bookingCalendar .calendarHeader .prev:hover {
+    background-color: #16a287;
+    color: white;
+    border-radius: 50%;
+}
+
+/* Next button */
+.bookingCalendar .calendarHeader .next {
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 17px;
+    cursor: pointer;
+    background-color: transparent;
+    outline: none;
+    float: right;
+    margin-top: 30px;
+}
+
+.bookingCalendar .calendarHeader .next:hover {
+    background-color: #16a287;
+    color: white;
+    border-radius: 50%;
+}
+
+/* Weekdays (Mon-Sun) */
+.daysofmonth {
+    margin: 0;
+    padding: 10px 0;
+    background-color: #ddd;
+}
+
+
+
+/* ----------------------------- LEGEND FOR CALENDAR --------------------------------- */
+
+.legendForCalendar {
+  width: 50%;
+}
+
+.legendForCalendar th {
+  text-align: left;
+  width: 20%;
+}
+
+.legendForCalendar tr td {
+  width: 20%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 40px;
+}
+
+.legendForCalendar .legendFree {
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    color: #777;
+    background-color: #2ecc71;
+    margin-right: 15px;
+    color: white !important;
+    cursor: pointer;
+}
+
+.legendForCalendar .legendOccupied {
+    background: #E8E8E8;    
+    width: 100%;
+    text-align: center;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #777;
+    margin-left: 5px;
+    margin-right: 5px;
+    cursor: default;
+}
+
+.legendForCalendar .legendSelected {
+    background: peru;    
+    width: 100%;
+    text-align: center;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: white;
+    margin-left: 5px;
+    margin-right: 5px;
+    cursor: default;
+}
+
+/* ----------------------------- CALENDAR DATE INFO ----------------------------------- */
+.checkInAndOutDates {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+}
+
+.dividerLine {
+    width: 2px;
+    margin: 6px 0;
+    background: #808080;
+}
+
+/* ---------------------------------SLIDER--------------------------------------------- */
+
+
+.slidecontainer {
+    width: 100%; /* Width of the outside container */
+}
+
+/* The slider itself */
+.form-control-range {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    width: 100%; /* Full-width */
+    height: 25px; /* Specified height */
+    background: #d3d3d3; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+}
+
+/* Mouse-over effects */
+.form-control-range:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.form-control-range::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #4CAF50; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+}
+
+.form-control-range::-ms-slider-thumb {
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #4CAF50; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+}
+
+.form-control-range::-moz-range-thumb {
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #4CAF50; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+}
+
+
+
+
+/* ---------------------------------MENU--------------------------------------------- */
+.calendar-days {
+  width: 60px;
+  height: 60px;
+  background: #669999;
+  border: 3px solid #c2c2c2;
+} 
+
+.flex-container {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+
+ /* Style the form */
+#regForm {
+  background-color: #F1F1F1;
+  margin: 100px auto;
+  padding: 40px;
+  width: 70%;
+  min-width: 300px;
+}
+
+/* Style the input fields */
+/* input {
+  padding: 10px;
+  width: 100%;
+  font-size: 17px;
+  border: 1px solid #aaaaaa;
+} */
+
+/* Mark input boxes that gets an error on validation: */
+input.invalid {
+  background-color: #ffdddd;
+}
+
+/* ---------------------------- TAB -------------------------------------------- */
+/* Hide all steps by default: */
+.tab {
+  display: none;
+}
+
+/* ---------------------------- step indicator -------------------------------- */
+/* Make circles that indicate the steps of the form: */
+.step {
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbbbbb;
+  border: none;
+  border-radius: 50%;
+  display: inline-block;
+  opacity: 0.5;
+}
+
+/* Mark the active step: */
+.step.active {
+  background-color: #e67e22;
+  opacity: 1;
+}
+
+/* Mark the steps that are finished and valid: */
+.step.finish {
+  background-color: #4CAF50;
+}
+
+/* ------------------------------------ buttons ------------------------------------- */
+
+button:hover {
+  opacity: 0.8;
+}
+
+#prevBtn {
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 17px;
+  cursor: pointer;
+  background-color: #BBBBBB;
+  margin-right: 10px;
+}
+
+#nextBtn {
+  background-color: #4CAF50;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+#nextBtn:disabled {
+  background-color: #e17055;
+  opacity: 0.8;
+  cursor: not-allowed;
+}
+
+
+/* ---------------------------- radio buttons ----------------------------------------*/
+/* The container */
+.container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #ffffff;
+    border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.container input:checked ~ .checkmark {
+    background-color: #2196F3;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.container .checkmark:after {
+  top: 9px;
+  left: 9px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: white;
+}
+
+
+/* ---------------------------- payment buttons ----------------------------------------*/
+.paymentButtonContainer {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.paymentHeading {
+    margin-bottom: 20px;
+}

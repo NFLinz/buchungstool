@@ -1,0 +1,136 @@
+ul {list-style-type: none;}
+body {
+  font-family: Verdana, sans-serif;
+}
+
+.title {
+  display: block;
+  margin: auto;
+  text-align: center;
+  max-width: 80%;
+  padding:5px;
+  width: 100%;
+}
+
+#gradientHeading {
+    text-align:center;
+    margin:auto;
+    color:#f3f3f3;
+    font-size:30px;
+    font-weight:550;
+    padding-top:70px;
+    height: 200px;
+    width: 100%;
+    background-color: #1fc8db;
+    background-image: linear-gradient(141deg, #9fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
+    color: white;
+    opacity: 0.95;
+}
+
+#bookingForm {
+  background-color: #f0f0f0;
+  margin: 100px auto;
+  margin-top: 20px;
+  padding: 40px;
+  width: 70%;
+  min-width: 300px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.titleh1 {
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+
+h3 {
+  margin-top: 30px;
+  font-size: 20px;
+}
+
+h4 {
+  font-size: 20px;
+}
+
+.subheading {
+  color: #808080;
+  font-size: 15px;
+  margin-top: -5px;
+  margin-bottom: 10px;
+}
+
+.titlesubheading {
+  color: #808080;
+  font-size: 16px;
+  margin-top: 0px;
+  margin-bottom: 20px;
+}
+
+.separatorHR {
+  margin: 50px 0px;
+}
+
+a.btn {
+	color: white;
+	margin-right: 3px;
+}
+
+a.buchenBtn {
+    background-color: #191970;
+}
+
+a.buchenBtn:hover {
+  color: white;
+  background-color: #46468c;
+}
+
+a.detailBtn {
+    background-color: #d35400;
+}
+
+a.detailBtn:hover {
+    color: white;
+    background-color: #d76519;
+}
+
+.card-img-top {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 40px;
+    width: 40%;
+}
+
+.container {
+    margin-top:20px;
+    margin-bottom: 90px;
+}
+
+.row {
+    justify-content: center;
+}
+
+.optionTitle {
+  padding-top: 30%;
+  padding-bottom: 30%;
+  text-align: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 40px;
+  color: #f0f0f0;
+}
+
+.tile {
+  border-radius: 25px;
+  background: #73AD21;
+  padding: 20px; 
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}

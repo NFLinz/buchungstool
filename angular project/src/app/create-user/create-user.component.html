@@ -1,0 +1,140 @@
+<h1>Buchung: Schritt 2 von 3</h1>
+
+ 
+<!-- HTML form for creating a user -->
+<div class="row pt-5"> <!-- pt-5 means padding top of 5 -->
+    <div class="col-md-6 mx-auto">
+        <div class="card rounded-0">
+            <div class="card-header">
+                <h3 class="mb-0">Persönliche Daten</h3>
+            </div>
+ 
+            <div class="card-body">
+                <form class="form" [formGroup]="create_user_form" (ngSubmit)="createUser()">
+                    <div class="form-group"> 
+                        <label for="">Vorname</label>
+                        <input
+                            formControlName="vorname"
+                            type="string" name="vorname"
+                            class="form-control" required />
+             
+                        <!-- show this error if the field is 'empty' and 'touched' -->
+                        <div
+                            *ngIf="create_user_form.get('vorname').touched && create_user_form.get('vorname').hasError('required')"
+                            class="alert alert-danger">
+                        Bitte geben Sie Ihren Vornamen an.
+                        </div>
+                    </div>
+
+                    <div class="form-group"> 
+                        <label for="">Nachname</label>
+                        <input
+                            formControlName="nachname"
+                            type="string" name="nachname"
+                            class="form-control" required />
+                 
+                            <!-- show this error if the field is 'empty' and 'touched' -->
+                            <div
+                                *ngIf="create_user_form.get('nachname').touched && create_user_form.get('nachname').hasError('required')"
+                                class="alert alert-danger">
+                            Bitte geben Sie eine Personenzahl an.
+                            </div>
+                    </div>  
+
+                    <div class="form-group"> 
+                        <label for="">Geburtsdatum</label>
+                        <input
+                            formControlName="geburtsdatum"
+                            type="date" name="geburtsdatum"
+                            class="form-control" required />
+             
+                        <!-- show this error if the field is 'empty' and 'touched' -->
+                        <div
+                            *ngIf="create_user_form.get('geburtsdatum').touched && create_user_form.get('geburtsdatum').hasError('required')"
+                            class="alert alert-danger">
+                        Bitte geben Sie das Anreisedatum an.
+                        </div>
+                    </div>    
+
+                    <div class="form-group" auto> 
+                        <label for="">Adresse</label>
+                        <input
+                            formControlName="adresse"
+                            type="string" name="adresse"
+                            class="form-control" required />
+             
+                            <!-- show this error if the field is 'empty' and 'touched' -->
+                            <div
+                                *ngIf="create_user_form.get('adresse').touched && create_user_form.get('adresse').hasError('required')"
+                                class="alert alert-danger">
+                            Bitte geben Sie das Abreisedatum an.
+                            </div>
+                    </div> 
+
+                    <div class="form-group" auto> 
+                        <label for="">Postleitzahl</label>
+                        <input
+                            formControlName="plz"
+                            type="string" name="plz"
+                            class="form-control" required />
+             
+                            <!-- show this error if the field is 'empty' and 'touched' -->
+                            <div
+                                *ngIf="create_user_form.get('plz').touched && create_user_form.get('plz').hasError('required')"
+                                class="alert alert-danger">
+                            Bitte geben Sie das Abreisedatum an.
+                            </div>
+                    </div> 
+
+                    <div class="form-group" auto> 
+                        <label for="">Ort</label>
+                        <input
+                            formControlName="ort"
+                            type="string" name="ort"
+                            class="form-control" required />
+             
+                            <!-- show this error if the field is 'empty' and 'touched' -->
+                            <div
+                                *ngIf="create_user_form.get('ort').touched && create_user_form.get('ort').hasError('required')"
+                                class="alert alert-danger">
+                            Bitte geben Sie das Abreisedatum an.
+                            </div>
+                    </div>
+
+    				<div class="form-group" auto> 
+                        <label for="">Telefonnummer</label>
+                        <input
+                            formControlName="telefonnummer"
+                            type="string" name="telefonnummer"
+                            class="form-control" required />
+             
+                            <!-- show this error if the field is 'empty' and 'touched' -->
+                            <div
+                                *ngIf="create_user_form.get('telefonnummer').touched && create_user_form.get('telefonnummer').hasError('required')"
+                                class="alert alert-danger">
+                            Bitte geben Sie das Abreisedatum an.
+                            </div>
+                    </div>
+
+                    <div class="form-group" auto> 
+                        <label for="">E-Mail Adresse</label>
+                        <input
+                            formControlName="mail"
+                            type="string" name="mail"
+                            class="form-control" required />
+             
+                            <!-- show this error if the field is 'empty' and 'touched' -->
+                            <div
+                                *ngIf="create_user_form.get('mail').touched && create_user_form.get('mail').hasError('required')"
+                                class="alert alert-danger">
+                            Bitte geben Sie das Abreisedatum an.
+                            </div>
+                    </div>
+
+                    <button class="btn btn-primary float-right" type="submit" [disabled]="create_user_form.invalid">Weiter</button>
+                 
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,230 @@
+<div class="title">
+  <h1>Buchung ändern</h1>
+  <h4 class="subheading">Felder ausfüllen, die Sie ändern wollen.</h4>
+  <button (click)="goBack()" class='btn btn-primary float-center'>
+          <span class='fa fa-chevron-circle-left'></span> Zurück
+  </button>
+</div>
+
+<form class="closedDayForm" [formGroup]="update_booking_form" (ngSubmit)="updateBooking()">
+
+  <h1>Buchung Nr. {{bookingID}}</h1>
+  <hr>
+
+  <h2>Preise</h2>
+  <hr class="subhr">
+
+  <h3>Vereinbarter Preis Erwachsene</h3>
+  <div class="form-group">
+      <input formControlName="preisErwachsene" type="number" name="preisErwachsene" class="form-control" value="{{booking?.preisErwachsene}}"/>
+  </div>
+
+  <h3>Vereinbarter Preis Jugendliche</h3>
+  <div class="form-group">
+      <input formControlName="preisJugendliche" type="number" name="preisJugendliche" class="form-control" value="{{booking?.preisJugendliche}}"/>
+  </div>
+
+  <h3>Vereinbarter Preis Kinder</h3>
+  <div class="form-group">
+      <input formControlName="preisKinder" type="number" name="preisKinder" class="form-control" value="{{booking?.preisKinder}}"/>
+  </div>
+
+
+
+
+
+
+
+  <h2>Freiplätze</h2>
+  <hr class="subhr">
+
+  <h3>Freiplätze Erwachsene Mitglied</h3>
+  <div class="form-group">
+      <input formControlName="freiplaetzeErwMitglied" type="number" name="freiplaetzeErwMitglied" class="form-control" value="{{booking?.freiplaetzeErwMitglied}}"/>
+  </div>
+
+  <h3>Freiplätze Jugendliche Mitglied</h3>
+  <div class="form-group">
+      <input formControlName="freiplaetzeJgdMitglied" type="number" name="freiplaetzeJgdMitglied" class="form-control" value="{{booking?.freiplaetzeJgdMitglied}}"/>
+  </div>
+
+  <h3>Freiplätze Kinder Mitglied</h3>
+  <div class="form-group">
+      <input formControlName="freiplaetzeKindMitglied" type="number" name="freiplaetzeKindMitglied" class="form-control" value="{{booking?.freiplaetzeKindMitglied}}"/>
+  </div>
+
+  <h3>Freiplätze Erwachsene Nicht-Mitglied</h3>
+  <div class="form-group">
+      <input formControlName="freiplaetzeErwNichtMitglied" type="number" name="freiplaetzeNichtErwMitglied" class="form-control" value="{{booking?.freiplaetzeErwNichtMitglied}}"/>
+  </div>
+
+  <h3>Freiplätze Jugendliche Nicht-Mitglied</h3>
+  <div class="form-group">
+      <input formControlName="freiplaetzeJgdNichtMitglied" type="number" name="freiplaetzeJgdNichtMitglied" class="form-control" value="{{booking?.freiplaetzeJgdNichtMitglied}}"/>
+  </div>
+
+  <h3>Freiplätze Kinder Nicht-Mitglied</h3>
+  <div class="form-group">
+      <input formControlName="freiplaetzeKindNichtMitglied" type="number" name="freiplaetzeKindNichtMitglied" class="form-control" value="{{booking?.freiplaetzeKindNichtMitglied}}"/>
+  </div>
+
+
+
+
+
+
+
+  <h2>Buchungsdetails</h2>
+  <hr class="subhr">
+
+  <h3>Anrede</h3>
+  <h6>Aktuell: {{booking?.anrede}}</h6>
+  <div class="form-group">
+      <select formControlName="anrede" class="form-control" id="anredeSelect" 
+              #anredeRef (change)="anredeSelectOnChange(anredeRef.value)">
+              <option *ngFor="let anrede of anreden">{{anrede}}</option>
+      </select>
+  </div> 
+
+  <div *ngIf="(update_booking_form.get('anrede').value === 'Firma') || booking?.firmenname !== ''">
+      <h3>Firmenname</h3>
+      <div class="form-group">
+          <input formControlName="firmenname" type="text" name="firmenname" class="form-control" value="{{booking?.firmenname}}"/>
+      </div>
+  </div>
+
+  <h3>Anreisedatum</h3>
+  <div class="form-group">
+      <input formControlName="startDatum" name="startDatum" type="date" class="form-control" value="{{booking?.checkinDatum}}"/>
+  </div>
+
+  <h3>Abreisedatum</h3>
+  <div class="form-group">
+      <input formControlName="endDatum" type="date" name="endDatum" class="form-control" value="{{booking?.checkoutDatum}}"/>
+
+      <div *ngIf="isEndDateDefined() === true && validateRange() === false" class="alert alert-danger">
+          Enddatum darf nicht vor dem Startdatum liegen.
+      </div>
+  </div>
+
+  <h3>Erwachsene (Mitglied)</h3>
+  <div class="form-group">
+      <input formControlName="erwachseneMitglieder" type="number" name="erwachseneMitglieder" class="form-control" value="{{booking?.erwachseneMitglieder}}"/>
+  </div>
+
+  <h3>Erwachsene (Nicht-Mitglied)</h3>
+  <div class="form-group">
+      <input formControlName="erwachseneNichtMitglieder" type="number" name="erwachseneNichtMitglieder" class="form-control" value="{{booking?.erwachseneNichtMitglieder}}"/>
+  </div>
+
+  <h3>Jugendliche (Mitglied)</h3>
+  <div class="form-group">
+      <input formControlName="jugendlicheMitglieder" type="number" name="jugendlicheMitglieder" class="form-control" value="{{booking?.jugendlicheMitglieder}}"/>
+  </div>
+
+  <h3>Jugendliche (Nicht-Mitglied)</h3>
+  <div class="form-group">
+      <input formControlName="jugendlicheNichtMitglieder" type="number" name="jugendlicheNichtMitglieder" class="form-control" value="{{booking?.jugendlicheNichtMitglieder}}"/>
+  </div>
+
+  <h3>Kinder (Mitglied)</h3>
+  <div class="form-group">
+      <input formControlName="kinderMitglieder" type="number" name="kinderMitglieder" class="form-control" value="{{booking?.kinderMitglieder}}"/>
+  </div>
+
+  <h3>Kinder (Nicht-Mitglied)</h3>
+  <div class="form-group">
+      <input formControlName="kinderNichtMitglieder" type="number" name="kinderNichtMitglieder" class="form-control" value="{{booking?.kinderNichtMitglieder}}"/>
+  </div>
+
+  <h3>Verpflegung</h3>
+  <h6>Aktuell: {{booking?.verpflegung}}</h6>
+  <div class="form-group">
+      <select formControlName="verpflegung" class="form-control" id="verpflegungSelect" 
+              #verpflegungRef (change)="verpflegungSelectOnChange(verpflegungRef.value)">
+              <option *ngFor="let type of boardTypes">{{type}}</option>
+      </select>
+  </div> 
+
+  <h3>Vorname</h3>
+  <div class="form-group">
+      <input formControlName="bvorname" type="text" name="bvorname" class="form-control" value="{{booking?.bvorname}}"/>
+  </div>
+
+  <h3>Nachname</h3>
+  <div class="form-group">
+      <input formControlName="bnachname" type="text" name="bnachname" class="form-control" value="{{booking?.bnachname}}"/>
+  </div>
+
+  <h3>Geburtsdatum</h3>
+  <div class="form-group">
+      <input formControlName="bgeburtsdatum" name="bgeburtsdatum" type="date" class="form-control" value="{{booking?.bgeburtsdatum}}"/>
+  </div>
+
+  <h3>Adresse</h3>
+  <div class="form-group">
+      <input formControlName="badresse" type="text" name="badresse" class="form-control" value="{{booking?.badresse}}"/>
+  </div>
+
+  <h3>PLZ</h3>
+  <div class="form-group">
+      <input formControlName="bplz" type="text" name="bplz" class="form-control" value="{{booking?.bplz}}"/>
+  </div>
+
+  <h3>Ort</h3>
+  <div class="form-group">
+      <input formControlName="bort" type="text" name="bort" class="form-control" value="{{booking?.bort}}"/>
+  </div>
+
+  <h3>Telefonnummer</h3>
+  <div class="form-group">
+      <input formControlName="btelefonnummer" type="text" name="btelefonnummer" class="form-control" value="{{booking?.btelefonnummer}}"/>
+  </div>
+
+  <h3>Mail</h3>
+  <div class="form-group">
+      <input formControlName="bmail" type="text" name="bmail" class="form-control" value="{{booking?.bmail}}"/>
+  </div>
+
+  <h3>Bestätigung</h3>
+  <div class="form-group">
+      <div class="form-check">
+          <input class="form-check-input" type="checkbox" formControlName="bestaetigt" id="bestaetigt">
+          <label class="form-check-label" for="bestaetigt">
+              Buchung wurde bestätigt
+          </label>
+      </div>
+  </div>
+
+  <h3>Rechnung versendet</h3>
+  <div class="form-group">
+      <div class="form-check">
+          <input class="form-check-input" type="checkbox" formControlName="rgversendet" id="rgversendet">
+          <label class="form-check-label" for="rgversendet">
+              Rechnung wurde versendet
+          </label>
+      </div>
+  </div>
+
+  <h3>Betrag zur Gänze bezahlt</h3>
+  <div class="form-group">
+      <div class="form-check">
+          <input class="form-check-input" type="checkbox" formControlName="bezahlt" id="bezahlt">
+          <label class="form-check-label" for="bezahlt">
+              Betrag ist komplett eingegangen
+          </label>
+      </div>
+  </div>
+
+  <h3>Bemerkung</h3>
+  <div class="form-group">
+      <input formControlName="bemerkung" type="text" name="bemerkung" class="form-control" value="{{booking?.bemerkung}}"/>
+  </div>
+
+  <!-- disable the submit button if the form is 'invalid' -->
+  <div style="text-align: center;">
+    <button class="btn btn-primary btn-lg" type="submit" [disabled]="update_booking_form.invalid">
+        <span class="glyphicon glyphicon-plus"></span> Buchung ändern
+    </button>
+  </div>
+</form>

@@ -1,0 +1,136 @@
+<div id="gradientHeading">{{huette?.name}} Buchungsplattform</div>
+
+<div class="title">
+  <h1>Firmen-/Gruppenbuchung</h1>
+  <h4 class="subheading">Erstellen Sie hier eine Buchungsanfrage.</h4>
+  <button (click)="goBack()" class='btn btn-primary float-center'>
+          <span class='fa fa-chevron-circle-left'></span> Abbrechen
+  </button>
+</div>
+
+<form class="closedDayForm" [formGroup]="create_company_booking_form" (ngSubmit)="sendEnquiry()">
+
+  <h1>Anfrage erstellen</h1>
+  <hr>
+
+  <h3>Anrede</h3>
+  <div class="form-group">
+      <select formControlName="anrede" class="form-control" id="anredeSelect" 
+              #anredeRef (change)="anredeSelectOnChange(anredeRef.value)" required>
+          <option *ngFor="let anrede of anreden">{{anrede}}</option>
+      </select>
+  </div> 
+
+  <div *ngIf="(create_company_booking_form.get('anrede').value === 'Firma')">
+    <h3>Firmenname</h3>
+    <div class="form-group">
+        <input formControlName="firmenname" type="text" name="firmenname" class="form-control" required />
+    </div>
+
+    <h3>Firmenadresse</h3>
+    <div class="form-group">
+        <input formControlName="firmenadresse" type="text" name="firmenadresse" class="form-control" required />
+    </div>
+
+    <h3>Firmenpostleitzahl</h3>
+    <div class="form-group">
+        <input formControlName="firmenplz" type="text" name="firmenplz" class="form-control" required />
+    </div>
+
+    <h3>Firmenort</h3>
+    <div class="form-group">
+        <input formControlName="firmenort" type="text" name="firmenort" class="form-control" required />
+    </div>
+  </div>
+
+  <h3>Anreisedatum</h3>
+  <div class="form-group">
+      <input formControlName="startDatum" name="startDatum" type="date" class="form-control" required />
+
+      <!-- show this error if the field is 'empty' and 'touched' -->
+      <div
+          *ngIf="create_company_booking_form.get('startDatum').touched && create_company_booking_form.get('startDatum').hasError('required')"
+          class="alert alert-danger">
+          Bitte Startdatum eingeben.
+      </div>
+  </div>
+
+  <h3>Abreisedatum</h3>
+  <div class="form-group">
+      <input formControlName="endDatum" type="date" name="endDatum" class="form-control" required />
+
+      <!-- show this error if the field is 'empty' and 'touched' -->
+      <div
+          *ngIf="create_company_booking_form.get('endDatum').touched && create_company_booking_form.get('endDatum').hasError('required')"
+          class="alert alert-danger">
+          Bitte Enddatum eingeben.
+      </div>
+      <div *ngIf="isEndDateDefined() === true && validateRange() === false" class="alert alert-danger">
+          Enddatum darf nicht vor dem Startdatum liegen.
+      </div>
+  </div>
+
+  <h3>Name der Kontaktperson</h3>
+  <div class="form-group">
+      <input formControlName="kontaktperson" type="text" name="kontaktperson" class="form-control" required />
+
+      <!-- show this error if the field is 'empty' and 'touched' -->
+      <div
+          *ngIf="create_company_booking_form.get('kontaktperson').touched && create_company_booking_form.get('kontaktperson').hasError('required')"
+          class="alert alert-danger">
+          Bitte Name der Kontaktperson angeben.
+      </div>
+  </div>
+
+  <h3>Telefonnummer</h3>
+  <div class="form-group">
+      <input formControlName="telefonnummer" type="text" name="telefonnummer" class="form-control" required />
+
+      <!-- show this error if the field is 'empty' and 'touched' -->
+      <div
+          *ngIf="create_company_booking_form.get('telefonnummer').touched && create_company_booking_form.get('telefonnummer').hasError('required')"
+          class="alert alert-danger">
+          Bitte Telefonnummer angeben.
+      </div>
+  </div>
+
+  <h3>Mail</h3>
+  <div class="form-group">
+      <input formControlName="mail" type="text" name="mail" class="form-control" required />
+
+      <!-- show this error if the field is 'empty' and 'touched' -->
+      <div
+          *ngIf="create_company_booking_form.get('mail').touched && create_company_booking_form.get('mail').hasError('required')"
+          class="alert alert-danger">
+          Bitte Mailadresse angeben.
+      </div>
+  </div>
+
+  <h3>Personenanzahl</h3>
+  <div class="form-group">
+      <select formControlName="personen" class="form-control" id="personenSelect" 
+              #personenRef (change)="personenSelectOnChange(personenRef.value)" required>
+          <option *ngFor="let key of getAscendingArray(1,30)">{{key}}</option>
+      </select>
+  </div> 
+
+  <h3>Davon Mitglieder der Naturfreunde (oder eines anderen Alpinvereins in Österreich)</h3>
+  <div class="form-group">
+      <select formControlName="mitglieder" class="form-control" id="mitgliederSelect" 
+              #mitgliederRef (change)="mitgliederSelectOnChange(mitgliederRef.value)" required>
+          <option *ngFor="let key of getAscendingArray(0,personen)">{{key}}</option>
+      </select>
+  </div>
+
+  <h3>Bemerkung</h3>
+  <div class="form-group">
+      <input formControlName="bemerkung" type="text" name="bemerkung" class="form-control"/>
+  </div>
+
+  <!-- disable the submit button if the form is 'invalid' -->
+  <div style="text-align: center;">
+    <button class="btn btn-primary btn-lg" type="submit" [disabled]="create_company_booking_form.invalid">
+        <span class="glyphicon glyphicon-plus"></span> Anfrage senden
+    </button>
+  </div>
+</form>

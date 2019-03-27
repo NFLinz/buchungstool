@@ -1,0 +1,123 @@
+<div class="row m-b-18px">
+    <div class="col-md-12 buttonPanel">
+        <a (click)="toggleViewMode()" class='btn btn-primary' style="color: white">
+            <span class='fa fa-table'></span> Ansicht wechseln
+        </a>
+
+        <!-- button to create new booking -->
+        <a (click)="createBooking()" class='btn btn-primary' style="color: white">
+            <span class='fa fa-plus-circle'></span> Neue Buchung
+        </a>
+    </div>
+</div>
+
+<div *ngIf="useCalendarView;else showTableView">
+    <div class="month"> 
+        <ul>
+            <button (click)="loadPreviousMonth()" type="button" class="prev">&#10094;</button>
+            <button (click)="loadNextMonth()" type="button" class="next">&#10095;</button>
+            <li class="mon">{{monthName}}</li>
+            <li class="yea">{{year}}</li>
+        </ul>
+    </div>
+
+    <table class="tableDisplay">
+        <tr>
+            <th class="roomHeading">Zimmer</th>
+            <th *ngFor="let day of days">{{day}}</th>
+        </tr>
+        
+        <tr *ngFor="let zimmer of zimmerArr">
+            <td class="roomName">{{zimmer.bezeichnung}}</td>
+            <td *ngFor="let day of days">
+                <div class="closedday" *ngIf="isClosedOnThisDay(day);else dayIsNotClosed">
+                    S                
+                </div>
+
+                <!-- if there is no free room available, display the day as occupied -->
+                <ng-template #dayIsNotClosed>
+                    <div *ngFor="let booking of getBookingsForRoom(zimmer?.zimmerID)">
+                        <div *ngIf="isRoomOccupiedAtThisDay(day, booking)">
+                            <button (click)="readOneBooking(booking.buchungID)" type="button" class="xbutton">X</button>
+                        </div>
+                    </div>
+                </ng-template>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="roomName">Lagerplätze frei</td>
+            <td *ngFor="let day of days">
+                {{getFreeLagerSpacesForDay(day)}}
+            </td>
+        </tr>
+
+    </table>
+</div>    
+
+<ng-template #showTableView>
+    <div class="month"> 
+        <ul>
+            <button (click)="loadPreviousMonth()" type="button" class="prev">&#10094;</button>
+            <button (click)="loadNextMonth()" type="button" class="next">&#10095;</button>
+            <li class="mon">{{monthName}}</li>
+            <li class="yea">{{year}}</li>
+        </ul>
+    </div>
+
+    <table class="tableDisplay">
+
+        <tr>
+            <th>BuchungID</th>
+            <th>Vorname</th>
+            <th>Nachname</th>
+            <th>Personen</th>
+            <th>Von</th>
+            <th>Bis</th>
+            <th>Aktionen</th>
+        </tr>
+
+        <tr *ngFor="let booking of bookingsOfMonth">
+            <td>{{booking.buchungID}}</td>
+            <td>{{booking.bvorname}}</td>
+            <td>{{booking.bnachname}}</td>
+            <td>{{getTotalPersonsOfBooking(booking)}}</td>
+            <td>{{toATLocaleDate(booking?.checkinDatum)}}</td>
+            <td>{{toATLocaleDate(booking?.checkoutDatum)}}</td>
+            <td>
+                <!-- read one product button -->
+                <a (click)="readOneBooking(booking.buchungID)" class='btn btn-primary m-r-5px' style="color: white">
+                    <span class='fa fa-eye'></span> Details
+                </a>
+
+                <!-- confirm button -->
+                <a *ngIf="booking.bestaetigt === '0'; else showFinalizeBtn" (click)="confirmBooking(booking.buchungID)" class='btn btn-success m-r-5px' style="color: white">
+                    <span class='fa fa-check'></span> Bestätigung
+                </a>
+
+                <!-- finalize button -->
+                <ng-template #showFinalizeBtn>
+                    <a *ngIf="booking.rgversendet === '0';else showBtnDisabled" (click)="finalizeBooking(booking.buchungID)" class='btn btn-secondary m-r-5px' style="color: white">
+                        <span class='fa fa-check-circle'></span> Abschließen
+                    </a>
+                </ng-template>
+
+                <ng-template #showBtnDisabled>
+                    <a class='btn btn-secondary m-r-5px disabled' style="color: white">
+                        <span class='fa fa-check-circle'></span> Abschließen
+                    </a>
+                </ng-template>
+                
+                <!-- edit button -->
+                <a (click)="updateBooking(booking.buchungID)" class='btn btn-info m-r-5px' style="color: white">
+                    <span class='fa fa-edit'></span> Ändern
+                </a>
+
+                <!-- delete button -->
+                <a (click)="deleteBooking(booking.buchungID)" class='btn btn-danger m-r-5px' style="color: white">
+                    <span class='fa fa-trash'></span> Löschen
+                </a>
+            </td>
+        </tr>
+    </table>
+</ng-template>

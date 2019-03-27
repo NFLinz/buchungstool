@@ -1,0 +1,62 @@
+<div id="gradientHeading">Testseite</div>
+
+<input type="number" [(ngModel)]="finalAmount">
+<h2>{{finalAmount.toFixed(2)}}</h2>
+<h2 *ngIf="paypalLoad">Paypal is loading</h2>
+
+<div id="paypal-checkout-btn"></div>
+<!-- <button type="button" id="paypal-checkout-btn">Weiter</button> -->
+
+
+
+<div class="tab">
+    <h1>Daten der Mitreisenden</h1>
+    <h2>Amount: {{getCalculatedAmountOfAdults()}}</h2>
+
+    <div>
+        <!-- {{fillMitreisendeFormArray()}} -->
+
+        <form [formGroup]="mitreisendeForm" class="form" id="bookingForm">
+        
+            <div formArrayName="mitreisende" *ngFor="let mitreisender of mitreisendeForm.get('mitreisende').controls; let i = index;">
+                <div [formGroupName]="i">
+                    <hr>
+                    <h2>Mitreisende/r {{i+1}}</h2>
+                    <div class="form-group"> 
+                        <label for="">Vorname</label>
+                        <input
+                            formControlName="vorname"
+                            type="string" name="vorname"
+                            class="form-control" required />    
+                    </div>
+                
+                    <div class="form-group"> 
+                        <label for="">Nachname</label>
+                        <input
+                            formControlName="nachname"
+                            type="string" name="nachname"
+                            class="form-control" required />
+                    </div>  
+
+                    <div class="form-group"> 
+                        <label for="">Geburtsdatum</label>
+                        <input
+                            formControlName="geburtsdatum"
+                            type="date" name="geburtsdatum"
+                            class="form-control" required />    
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" formControlName="mitglied" value="" id="istMitglied">
+                            <label class="form-check-label" for="istMitglied">
+                                Diese Person ist Naturfreunde Mitglied
+                            </label>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+            <button (click)="storeMitreisende()" class="btn btn-primary">Create</button>
+        </form>
+    </div>    
+</div>

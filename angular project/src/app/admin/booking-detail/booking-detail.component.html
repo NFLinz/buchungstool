@@ -1,0 +1,228 @@
+<div class="title">
+    <h1>Buchungsdetails</h1>
+    <h4 class="subheading">Alle Daten zur Buchung.</h4>
+    <button (click)="goBack()" class='btn btn-primary float-center'>
+            <span class='fa fa-chevron-circle-left'></span> Zurück
+    </button>
+</div>
+
+<br>
+
+<div class="buttonPanel">
+
+  <!-- confirm button -->
+  <a *ngIf="booking?.bestaetigt === '0'; else showFinalizeBtn" (click)="confirmBooking(booking.buchungID)" class='btn btn-success m-r-5px' style="color: white">
+      <span class='fa fa-check'></span> Bestätigung
+  </a>
+
+  <!-- finalize button -->
+  <ng-template #showFinalizeBtn>
+      <a *ngIf="booking?.rgversendet === '0';else showBtnDisabled" (click)="finalizeBooking(booking.buchungID)" class='btn btn-secondary m-r-5px' style="color: white">
+          <span class='fa fa-check-circle'></span> Abschließen
+      </a>
+  </ng-template>
+
+  <ng-template #showBtnDisabled>
+    <a *ngIf="booking?.bezahlt === '0';else showPaidBtnDisabled" (click)="setBookingAsPaid()" class='btn btn-success m-r-5px' style="color: white">
+      <span class='fa fa-check-circle'></span> Zahlung 100 % eingegangen
+    </a>
+  </ng-template>
+
+  <!-- paid button -->
+
+
+  <ng-template #showPaidBtnDisabled>
+      <a class='btn btn-success m-r-5px disabled' style="color: white">
+          <span class='fa fa-check-circle'></span> Zahlung 100 % eingegangen
+      </a>
+  </ng-template>
+
+  <!-- edit button -->
+  <a (click)="updateBooking()" class='btn btn-info m-r-5px' style="color: white">
+      <span class='fa fa-edit'></span> Ändern
+  </a>
+
+  <!-- invoice button -->
+  <a (click)="createInvoice()" class='btn btn-primary m-r-5px' style="color: white">
+      <span class='fa fa-file'></span> Rechnung erstellen
+  </a>
+
+  <!-- delete button -->
+  <a (click)="deleteBooking()" class='btn btn-danger m-r-5px' style="color: white">
+      <span class='fa fa-trash'></span> Löschen
+  </a>
+</div>
+
+<div class="container">
+
+  <h1>
+    Buchung Nr. {{booking?.buchungID}}
+    <small class="text-muted">Buchungsdetails</small>
+  </h1>
+  <hr/>
+
+
+  <table id="table1">
+    <tr>
+      <th>Bestätigt?</th>
+      <td *ngIf="booking?.bestaetigt === '1'; else elseBestaetigt">Ja</td>
+      <ng-template #elseBestaetigt><td>Nein</td></ng-template>
+    </tr>
+    <tr>
+      <th>Rechnung versandt?</th>
+      <td *ngIf="booking?.rgversendet === '1'; else elseVersendet">Ja</td>
+      <ng-template #elseVersendet><td>Nein</td></ng-template>
+    </tr>
+    <tr *ngFor="let room of bookedRoomsArr; index as i">
+      <th>Name Zimmer {{i+1}}</th>
+      <td>{{room?.bezeichnung}}</td>
+    </tr>
+    <tr>
+      <th>Name</th>
+      <td>{{booking?.bvorname}} {{booking?.bnachname}}</td>
+    </tr>
+    <tr>
+      <th>Verpflegung</th>
+      <td>{{booking?.verpflegung}}</td>
+    </tr>
+    <tr>
+      <th>Erwachsene (Mitglied)</th>
+      <td>{{booking?.erwachseneMitglieder}}</td>
+    </tr>
+    <tr>
+      <th>Erwachsene (Nicht-Mitglied)</th>
+      <td>{{booking?.erwachseneNichtMitglieder}}</td>
+    </tr>
+    <tr>
+      <th>Jugendliche (Mitglied)</th>
+      <td>{{booking?.jugendlicheMitglieder}}</td>
+    </tr>
+    <tr>
+      <th>Jugendliche (Nicht-Mitglied)</th>
+      <td>{{booking?.jugendlicheNichtMitglieder}}</td>
+    </tr>
+    <tr>
+      <th>Kinder (Mitglied)</th>
+      <td>{{booking?.kinderMitglieder}}</td>
+    </tr>
+    <tr>
+      <th>Kinder (Nicht-Mitglied)</th>
+      <td>{{booking?.kinderNichtMitglieder}}</td>
+    </tr>
+    <tr>
+      <th>Anreisedatum</th>
+      <td>{{toATLocaleDate(booking?.checkinDatum)}}</td>
+    </tr>
+    <tr>
+      <th>Abreisedatum</th>
+      <td>{{toATLocaleDate(booking?.checkoutDatum)}}</td>
+    </tr>
+    <tr>
+      <th>Gesamtpreis</th>
+      <td>{{toATLocale(booking?.preis)}}</td>
+    </tr>
+    <tr>
+      <th>Bezahlt?</th>
+      <td *ngIf="booking?.bezahlt === '1'; else elseBlock">Ja</td>
+      <ng-template #elseBlock><td>Nein</td></ng-template>
+    </tr>
+    <tr>
+      <th>Zahlungsart</th>
+      <td>Zahlung auf Rechnung</td>
+    </tr>
+
+    <tr>
+      <th>Freiplätze Erw (Mitglied)</th>
+      <td>{{booking?.freiplaetzeErwMitglied}}</td>
+    </tr>
+    <tr>
+      <th>Freiplätze Jgd (Mitglied)</th>
+      <td>{{booking?.freiplaetzeJgdMitglied}}</td>
+    </tr>
+    <tr>
+      <th>Freiplätze Kind (Mitglied)</th>
+      <td>{{booking?.freiplaetzeKindMitglied}}</td>
+    </tr>
+    <tr>
+      <th>Freiplätze Erw (Nicht-Mitglied)</th>
+      <td>{{booking?.freiplaetzeErwNichtMitglied}}</td>
+    </tr>
+    <tr>
+      <th>Freiplätze Jgd (Nicht-Mitglied)</th>
+      <td>{{booking?.freiplaetzeJgdNichtMitglied}}</td>
+    </tr>
+    <tr>
+      <th>Freiplätze Kind (Nicht-Mitglied)</th>
+      <td>{{booking?.freiplaetzeKindNichtMitglied}}</td>
+    </tr>
+  </table>
+
+
+  <br>
+  <h1>
+    Buchung Nr. {{booking?.buchungID}}
+    <small class="text-muted">Daten des Buchenden</small>
+  </h1>
+  <hr/>
+
+
+  <table id="table2">
+    <tr>
+      <th>Vorname</th>
+      <td>{{booking?.bvorname}} </td>
+    </tr>
+    <tr>
+      <th>Nachname</th>
+      <td>{{booking?.bnachname}}</td>
+    </tr>
+    <tr>
+      <th>Geburtsdatum</th>
+      <td>{{birthdayToATLocaleDate(booking?.bgeburtsdatum)}}</td>
+    </tr>
+    <tr>
+      <th>Adresse</th>
+      <td>{{booking?.badresse}}</td>
+    </tr>
+    <tr>
+      <th>Postleitzahl</th>
+      <td>{{booking?.bplz}}</td>
+    </tr>
+    <tr>
+      <th>Ort</th>
+      <td>{{booking?.bort}}</td>
+    </tr>
+    <tr>
+      <th>Telefon</th>
+      <td>{{booking?.btelefonnummer}}</td>
+    </tr>
+    <tr>
+      <th>E-Mail</th>
+      <td>{{booking?.bmail}}</td>
+    </tr>
+  </table>
+
+  <div *ngIf="mitreisendeArr">
+    <br>
+    <h1>
+      Buchung Nr. {{booking?.buchungID}}
+      <small class="text-muted">Daten der Mitreisenden</small>
+    </h1>
+    <hr/>
+
+    <table id="table3">
+      <tr>
+        <th>Vorname</th>
+        <th>Nachname</th>
+        <th>Geburtsdatum</th>
+        <th>Mitgliedschaft</th>
+      </tr>
+      <tr *ngFor="let person of mitreisendeArr">
+        <td>{{person?.vorname}}</td>
+        <td>{{person?.nachname}}</td>
+        <td>{{birthdayToATLocaleDate(person?.geburtsdatum)}}</td>
+        <td *ngIf="person?.mitglied === '1'; else elseMitglied">Ja</td>
+        <ng-template #elseMitglied><td>Nein</td></ng-template>
+      </tr>
+    </table>
+  </div>
+</div>

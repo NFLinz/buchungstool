@@ -1,0 +1,75 @@
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #52af2e;">
+  <a href="#" class="navbar-left  d-none d-sm-block">
+    <img class="img-responsive " src="/assets/logo.jpg">
+  </a>
+	<a class="navbar-brand" href="#">{{ title }}</a>
+	<button class="navbar-toggler" type="button" 
+			data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" 
+			aria-label="Toggle navigation">
+    	<span class="navbar-toggler-icon"></span>
+  	</button>
+
+  	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+  		<ul class="navbar-nav mr-auto">
+        <!-- <li class="nav-item active">
+          <a class="nav-link" routerLink="/test" routerLinkActive="active">Testpage</a>
+        </li> -->
+  		</ul>
+  		
+      <ul class="navbar-nav">
+        <a (click)="logout()" *ngIf="authService.isUserLoggedIn()" class='btn logoutBtn m-r-5px' style="
+                      color: white;
+                      background-color: red;
+                      padding: 5px 10px;
+                      text-decoration: none;
+                      margin-top: 5px;
+                      margin-right: 5px;
+                      margin-left: 5px; 
+                      display: inline-block;
+                      border-radius: 4px;">
+            <span class='fa fa-sign-out'></span> Logout
+        </a>
+      </ul>
+
+  		<ul class="navbar-nav">
+        <a routerLink="/login" id="verwaltungButton" *ngIf="!authService.isUserLoggedIn()" class='btn verwaltungBtn m-r-5px'>
+            <span class='fa fa-sign-in'></span> Verwaltung-Login
+        </a>
+  		</ul>
+      <ul class="navbar-nav">
+        <a routerLink="/admin" *ngIf="authService.isUserLoggedIn()" class='btn verwaltungBtn m-r-5px' style="
+                      color: #FFFF;
+                      background-color: blue;
+                      padding: 5px 10px;
+                      text-decoration: none;
+                      margin-top: 5px;
+                      margin-right: 5px;
+                      margin-left: 5px; 
+                      display: inline-block;
+                      border-radius: 4px;">
+            <span class='fa fa-hotel'></span> Verwaltung
+        </a>
+      </ul>
+  	</div>
+</nav>
+
+
+
+
+<main role="main">
+  <router-outlet></router-outlet>
+</main>
+
+
+<!-- Footer -->
+<footer class="myFooter">
+  <h5>Buchungstool Naturfreunde</h5>
+
+  <div class="socialMediaBar">
+    <i class="fa fa-facebook-official"></i>
+    <i class="fa fa-twitter"></i>
+    <i class="fa fa-snapchat"></i>
+  </div>
+
+  <p>&copy; <a href="http://linz.naturfreunde.at/" target="_blank">Naturfreunde-Linz 2019</a></p>
+</footer>

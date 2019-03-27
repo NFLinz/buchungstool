@@ -1,0 +1,42 @@
+<div class="title">
+  <h1>Rechnungsübersicht</h1>
+  <h4 class="subheading">Liste aller ausgestellten Rechnungen.</h4>
+</div>
+
+<table class="table-fill">
+  <thead>
+    <tr>
+      <th class="text-center">Rechnungsnummer</th>
+      <th class="text-center">Datum</th>
+      <th class="text-center">Vorname</th>
+      <th class="text-center">Nachname</th>
+      <th class="text-center">BuchungID</th>
+      <th class="text-center">Aktionen</th>
+    </tr>
+  </thead>
+
+  <tr *ngFor="let invoice of invoicesArr">
+    <td class="text-center">{{invoice.rechnungID}}</td>
+    <td class="text-center">{{invoice.datum}}</td>
+    <td class="text-center">{{invoice.bvorname}}</td>
+    <td class="text-center">{{invoice.bnachname}}</td>
+    <td class="text-center">{{invoice.buchungID}}</td>
+    <td class="text-center">
+        <!-- read one product button -->
+        <a target="_blank" rel="noopener noreferrer" href={{getDownloadURL(invoice.rechnungID)}} class='btn btn-primary m-r-5px' style="color: white">
+            <span class='fa fa-download'></span> PDF Download
+        </a>
+
+        <!-- delete button -->
+        <a (click)="deleteInvoice(invoice)" class='btn btn-danger m-r-5px' style="color: white">
+            <span class='fa fa-trash'></span> Löschen
+        </a>
+    </td>
+  </tr>
+</table>
+
+<!-- <div class="addButton">
+  <a (click)="createClosedDay()" class='btn btn-primary pull-center' style="color: white">
+    <span class='fa fa-plus-circle'></span> Neue Rechnung
+  </a>
+</div> -->

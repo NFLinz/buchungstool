@@ -1,0 +1,60 @@
+.head {
+  margin-top: 15px;
+  text-align: center;
+}
+
+h3 {
+  font-size: 30px;
+  font-weight:550;
+  color:#f3f3f3;
+}
+
+h4 {
+  font-size: 20px;
+  color: #484848;
+}
+
+#gradientHeading {
+  text-align:center;
+  margin:auto;
+  padding-top:70px;
+  margin-bottom: 50px;
+  height: 200px;
+  width: 100%;
+  background-color: #1fc8db;
+  background-image: linear-gradient(141deg, #9fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
+  color: white;
+  opacity: 0.95;
+}
+
+.nav {
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+
+nav a:visited, a:link {
+  color: #FFFF;
+
+  background-color: #52af2e;  /* default naturfreunde color ... invisible in nav bar, but everywhere else*/
+}
+
+a {
+  color: #FFFF;
+  padding: 5px 30px;
+  text-decoration: none;
+  margin-top: 5px;
+  margin-right: 5px;
+  margin-left: 5px; 
+  border-radius: 4px;
+}
+     
+a:hover {
+  background-color: #459226;
+}    
+
+.active {
+  border-bottom: 2px solid black;
+}     
+
+.active:hover {
+}      

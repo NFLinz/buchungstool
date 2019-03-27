@@ -1,0 +1,28 @@
+<a (click)="goBack()" class='btn backBtn'>
+  <span class='fa fa-chevron-circle-left'></span> Zurück zur Übersicht
+</a>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1 class="display-3">{{huette?.name}}</h1>
+    <button type="button" class="btn btn-primary" disabled="true">ab {{huette?.preis}} EUR/Nacht</button>
+    <button type="button" class="btn btn-primary" disabled="true">bis zu {{huette?.plaetze}} Personen</button>
+    <hr class="my-3">
+    <p>{{huette?.adresse}}</p>
+    <p>{{huette?.plz}} {{huette?.ort}}</p>
+    <p>Tel.: {{huette?.telefonnummer}}</p>
+    <p>E-Mail: {{huette?.mail}}</p>
+
+    <p>Zimmerkategorien:</p>
+    <p *ngFor="let category of categories">
+        {{ category.name }}
+    </p>
+
+    <p> 
+        <a (click)="openBookingFor(huette?.huetteID)" class='btn buchenBtn'>
+            <span class='fa fa-hotel'></span> Jetzt Buchen
+        </a>
+    </p>
+  </div>
+</div>
+<img class="card-img-top" src={{huette?.imageurl}} alt="Card image cap">
